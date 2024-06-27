@@ -5,9 +5,27 @@ import java.util.Scanner ;
 public class Bankify {
     public static void main(String[] args) {
         System.out.println("\n ): WELCOME TO BANKIFY A SIMPLE BANKING SYSTEM :)\n");
+                Bank bank = new Bank();
+        
+  
+                bank.CreateAccount(1, "John Doe", 1000.0);
+                bank.CreateAccount(2, "Jane Doe", 500.0);
+        
+                // Deposit and withdraw
+                bank.Deposite( 1, 500);
+                bank.withdraw(1, 200);
+        
+                // Transfer
+                bank.Transfer(1, 2, 300.0);
+        
+                // Print account balances
+                Account account1 = bank.getAccount(1);
+                Account account2 = bank.getAccount(2);
+                System.out.println("Account 1 balance: " + account1.getBalance());
+                System.out.println("Account 2 balance: " + account2.getBalance());
+            }
+        }
 
-    }
-}
 
 class Account {  
     private int AccountNumber ; 
@@ -46,7 +64,7 @@ class Account {
 class Bank {
      List<Account> accounts ; 
      
-     public void Bank(){
+     public Bank(){
         accounts = new ArrayList<>(); 
      }
      public boolean CreateAccount(int AccountNumber , String AccountHolder , double Balance){
@@ -75,7 +93,16 @@ class Bank {
              else { 
               System.out.println("Account Not Found");
              }
+    }
+    public void withdraw(int accountNumber, double amount) {
+        Account account = getAccount(accountNumber);
+        if (account != null) {
+            account.Withdrawl(amount);
+        } else {
+            System.out.println("Account not found!");
         }
+    }
+
      public void Transfer(int fromAccount , int toAccount  , Double balance){
          Account fromAccountNumber = getAccount(fromAccount); 
          Account toAccountNumber = getAccount(toAccount); 
@@ -89,4 +116,30 @@ class Bank {
          }
      }
     }
+    
+     class Transaction {
+        private int transactionId;
+        private String transactionType;
+        private double amount;
+    
+        public Transaction(int transactionId, String transactionType, double amount) {
+            this.transactionId = transactionId;
+            this.transactionType = transactionType;
+            this.amount = amount;
+        }
+    
+        public int getTransactionId() {
+            return transactionId;
+        }
+    
+        public String getTransactionType() {
+            return transactionType;
+        }
+    
+        public double getAmount() {
+            return amount;
+        }
+    }
+
+
 
